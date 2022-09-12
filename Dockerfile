@@ -23,7 +23,7 @@ RUN set -x \
    && apt install -y \
        libx11-xcb1 \
        libdbus-glib-1-2 \
-   && curl -sSLO https://ftp.mozilla.org/pub/firefox/releases/92.0/linux-x86_64/en-US/firefox-92.0.tar.bz2 \
+   && curl -sSLO https://ftp.mozilla.org/pub/firefox/releases/99.0/linux-x86_64/en-US/firefox-99.0.tar.bz2 \
    && tar -jxf firefox-* \
    && mv firefox /opt/ \
    && chmod 755 /opt/firefox \
@@ -42,6 +42,6 @@ RUN pip install -r requirements.txt
 ENV PORT 8080
 
 # CMD [ "gunicorn", "--workers=1", "--threads=1", "-b 0.0.0.0:8080","--graceful-timeout 100", "app:app"]
-CMD gunicorn --timeout 1000 --workers 1 --threads 4 --bind 0.0.0.0:8080 main:app
+CMD gunicorn --timeout 1000 --workers 1 --threads 4 --bind 0.0.0.0:8080 app:app
 # --log-level debug
 # CMD["gunicorn", "--timeout", "1000", "--workers=1","-b", "0.0.0.0:8000","--log-level", "debug", "manage"]

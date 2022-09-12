@@ -1,3 +1,6 @@
-gcloud builds submit --tag gcr.io/my-first-dash-app/peer_review_dash  --project=my-first-dash-app
+gcloud builds submit --tag gcr.io/studied-beanbag-362003/demo-web-crawler
 
-gcloud run deploy peerreviewdash --image gcr.io/my-first-dash-app/peer_review_dash:latest --platform managed  --project=my-first-dash-app --allow-unauthenticated
+gcloud run deploy --image gcr.io/studied-beanbag-362003/demo-web-crawler:latest --platform managed   --allow-unauthenticated
+
+
+--project=studied-beanbag-362003

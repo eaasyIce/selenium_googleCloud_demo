@@ -1,0 +1,5 @@
+https://www.gartner.com/reviews/market/crm-customer-engagement-center/vendor/servicenow/product/servicenow-customer-service-management/reviews
+https://www.gartner.com/reviews/market/crm-customer-engagement-center/vendor/microsoft/product/microsoft-dynamics-365-customer-service/reviews
+https://www.gartner.com/reviews/market/crm-customer-engagement-center/vendor/oracle/product/oracle-service/reviews
+https://www.gartner.com/reviews/market/crm-customer-engagement-center/vendor/zendesk/product/zendesk-suite/reviews
+https://www.gartner.com/reviews/market/crm-customer-engagement-center/vendor/salesforce/product/salesforce-center-cloud/reviews
