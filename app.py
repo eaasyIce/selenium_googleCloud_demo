@@ -5,42 +5,35 @@ from crawler import crawler
 
 app = Flask(__name__)
 
-
 @app.route('/')
 def main():
     print('starts')
-
+    
     # Retrieve source data
     client = bigquery.Client()
     sql = """SELECT * FROM `studied-beanbag-362003.source_urls.source_urls`"""
     df = client.query(sql).to_dataframe()
-    completed_record = []
-    url_list = []
-    for row in df.itertuples():
-        url_list.append(row.URL)
-        try:
-            star, rating = crawler(row.URL.strip())
-        except:
-            print(f'{row.Product} *******has failed*******')
-            continue # https://stackoverflow.com/questions/1843659/how-to-get-back-to-the-for-loop-after-exception-handling
+    url_list = df['URL'].to_list()
+    try:   
+        results = crawler(url_list)
+    except:
+        print(f'******* Fail to start the crawler *******')
+        return "Fail to start the crawler"
+    for row, resultTuple in zip(df.itertuples(), results):
         rows_to_insert = [{
             'URL': row.URL,
             "Company": row.Company,
             "Product": row.Product,
-            "totalReview": rating,
-            "Score": star,
+            "totalReview": resultTuple[1],
+            "Score": resultTuple[0],
             "Date": time.strftime("%Y-%m-%d %H:%M:%S")
             }]        
         table_id = f'studied-beanbag-362003.crawl_data.crawl_data'
-        errors = client.insert_rows_json(table_id, rows_to_insert)  # Make an API request.
-        if errors == []:
-            print(f"New row have been added.")
-        else:
-            print(f"Encountered errors while inserting row: {errors}")
-
-        completed_record.append(row.Company)
+        client.insert_rows_json(table_id, rows_to_insert)  # Make an API request.
+        if resultTuple[1] == -1 or resultTuple[0] == -1:
+            print(f"Unable to crawl {row.Company}, inserting default values")
         print(f'{row.Company} completed: scraping & updating was successful at {time.strftime("%Y-%m-%d %H:%M:%S")}' )
-    return completed_record
+    return "Crawling requests has been completed"
 
 if __name__ == '__main__':
     app.run(debug=False)

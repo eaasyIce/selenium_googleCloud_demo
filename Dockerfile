@@ -35,13 +35,10 @@ RUN set -x \
    && tar zxf geckodriver-*.tar.gz \
    && mv geckodriver /usr/bin/
 
-
 RUN pip install --upgrade pip
 
 RUN pip install -r requirements.txt
 ENV PORT 8080
-
 # CMD [ "gunicorn", "--workers=1", "--threads=1", "-b 0.0.0.0:8080","--graceful-timeout 100", "app:app"]
+
 CMD gunicorn --timeout 1000 --workers 1 --threads 4 --bind 0.0.0.0:8080 app:app
-# --log-level debug
-# CMD["gunicorn", "--timeout", "1000", "--workers=1","-b", "0.0.0.0:8000","--log-level", "debug", "manage"]
